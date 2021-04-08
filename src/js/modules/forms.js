@@ -1,6 +1,6 @@
 import { postData } from '../services/requests';
 
-const forms = () => {
+const forms = (state) => {
 	const form = document.querySelectorAll('form'),
 		inputs = document.querySelectorAll('input'),
 		upload = document.querySelectorAll('[name="upload"]');
@@ -62,6 +62,11 @@ const forms = () => {
 			statusMessage.appendChild(textMessage);
 
 			const formData = new FormData(item);
+			if (item.classList.contains('calc-form')) {
+				for (let key in state) {
+					formData.append(key, state[key]);
+				}
+			}
 			let api;
 			item.closest('.popup-design') || item.classList.contains('calc-form')
 				? (api = path.designer)
