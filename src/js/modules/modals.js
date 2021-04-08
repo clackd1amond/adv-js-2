@@ -2,12 +2,7 @@ const modals = () => {
 	const giftImg = document.querySelector('.fixed-gift');
 	let btnPressed = false;
 
-	function bindModal(
-		triggerSelector,
-		modalSelector,
-		closeSelector,
-		destroy = false
-	) {
+	function bindModal(triggerSelector, modalSelector, closeSelector, destroy = false) {
 		const trigger = document.querySelectorAll(triggerSelector),
 			modal = document.querySelector(modalSelector),
 			close = document.querySelector(closeSelector),
@@ -26,13 +21,10 @@ const modals = () => {
 
 		trigger.forEach((item) => {
 			item.addEventListener('click', (e) => {
-				if (e.target) {
-					e.preventDefault();
-				}
+				if (e.target) e.preventDefault();
+				if (destroy) item.remove();
 
 				btnPressed = true;
-
-				if (destroy) item.remove();
 
 				closeModal();
 				openModal(modal);
@@ -48,10 +40,7 @@ const modals = () => {
 		});
 
 		document.addEventListener('keydown', (e) => {
-			if (
-				e.code === 'Escape' &&
-				document.body.classList.contains('modal-open')
-			) {
+			if (e.code === 'Escape' && document.body.classList.contains('modal-open')) {
 				closeModal();
 			}
 		});
@@ -92,10 +81,7 @@ const modals = () => {
 	function showModalByScroll(modal) {
 		window.addEventListener('scroll', () => {
 			let scrollHeight = Math.max(document.documentElement.scrollHeight, document.body.scrollHeight);
-			if (
-				window.pageYOffset + document.documentElement.clientHeight >= scrollHeight &&
-				!btnPressed
-			) {
+			if (window.pageYOffset + document.documentElement.clientHeight >= scrollHeight && !btnPressed) {
 				document.querySelector(modal).click();
 				window.removeEventListener('scroll', showModalByScroll);
 			}
